@@ -1,12 +1,13 @@
 package chapter2;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Created by 13 on 2017/5/4.
  */
 public class ArrayListMultiThread {
-    static ArrayList<Integer> arrayList = new ArrayList<Integer>(10);
+    static Vector<Integer> arrayList = new Vector<Integer>(10);
 
     public static class AddThread implements Runnable {
 
@@ -23,8 +24,15 @@ public class ArrayListMultiThread {
          */
         @Override
         public void run() {
-            for (int i = 0; i < 10000; i++) {
+            System.out.println("Tread name:" + Thread.currentThread().getName());
+            for (int i = 0; i < 10; i++) {
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 arrayList.add(i);
+                System.out.println("Tread name:" + Thread.currentThread().getName() + " " + i);
             }
         }
     }
@@ -35,23 +43,47 @@ public class ArrayListMultiThread {
      * at java.util.ArrayList.add(ArrayList.java:441)
      * at chapter2.ArrayListMultiThread$AddThread.run(ArrayListMultiThread.java:27)
      * at java.lang.Thread.run(Thread.java:745)
-     *
+     * <p>
      * Vector是一个线程安全的容器,可以代替ArrayList
      *
      * @param args
      * @throws InterruptedException
      */
     public static void main(String args[]) throws InterruptedException {
-        Thread thread1 = new Thread(new AddThread());
-        Thread thread2 = new Thread(new AddThread());
-
+        Thread thread1 = new Thread(new AddThread(), "1");
+        //Thread thread2 = new Thread(new AddThread(), "2");
+        //System.out.println("Tread name:" + Thread.currentThread().getName());
         thread1.start();
-        thread2.start();
+
+        for (int i = 0; i < 10; i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            arrayList.add(i);
+            System.out.println("Tread name:" + Thread.currentThread().getName() + "asdada= " + i);
+        }
+
 
         thread1.join();
-        thread2.join();
+        for (int i = 0; i < 10; i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            arrayList.add(i);
+            System.out.println("Tread name:" + Thread.currentThread().getName() + " cccccc" + i);
+        }
+        //thread2.start();
+        //System.out.println("Tread name:111" + Thread.currentThread().getName());
 
-        System.out.println(arrayList.size());
+        //System.out.println("Tread name:222" + Thread.currentThread().getName());
+        //thread2.join();
+        //System.out.println("Tread name:" + Thread.currentThread().getName());
+        //System.out.println(arrayList.size());
+        System.out.println("end");
     }
 
 }

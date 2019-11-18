@@ -24,7 +24,7 @@ public class BadLockOnInteger implements Runnable {
     @Override
     public void run() {
         for (int j = 0; j < 1000000; j++) {
-            synchronized (i) {//这里同步的并不是同一个对象,因为i是以Integer关键字创建的
+            synchronized (instance){//这里同步的并不是同一个对象,因为i是以Integer关键字创建的
                 //正确做法应该是 synchronized (instance)
                 i++;
             }

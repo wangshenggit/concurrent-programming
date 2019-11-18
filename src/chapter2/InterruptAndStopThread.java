@@ -27,7 +27,9 @@ public class InterruptAndStopThread {
         };
 
         thread.start();
+        System.out.println("开始睡眠");
         Thread.sleep(2000);
+        System.out.println("结束睡眠");
         thread.interrupt();//进行中断操作
     }
 }

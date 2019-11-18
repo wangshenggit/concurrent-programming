@@ -24,8 +24,10 @@ public class AccountingVol implements Runnable {
      */
     @Override
     public void run() {
-        for (int j = 0; j < 10000000; j++) {
+
+        for (int j = 0; j < 100; j++) {
             increase();
+            System.out.println(Thread.currentThread().getName());
         }
     }
 
@@ -37,14 +39,14 @@ public class AccountingVol implements Runnable {
      * @throws InterruptedException
      */
     public static void main(String args[]) throws InterruptedException {
-        Thread thread1 = new Thread(instance);
-        Thread thread2 = new Thread(instance);
+        Thread thread1 = new Thread(instance,"1");
+        Thread thread2 = new Thread(instance,"2");
 
         thread1.start();
         thread2.start();
 
         thread1.join();
-        thread2.join();
+        //thread2.join();
 
         System.out.println(i);
     }
